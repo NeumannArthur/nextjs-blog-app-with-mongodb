@@ -22,7 +22,6 @@ export default function PostCard({ post }) {
             return setPublishing(false);
         }
     };
-
     const deletePost = async (postId) => {
         setDeleting(true);
 
@@ -35,10 +34,10 @@ export default function PostCard({ post }) {
             setDeleting(false);
 
             return router.push(router.asPath);
-        } catch(error) {
+        } catch (error) {
             return setDeleting(false);
         }
-    }
+    };
     return (
         <>
             <li>

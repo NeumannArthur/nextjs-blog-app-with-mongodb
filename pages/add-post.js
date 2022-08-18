@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState } from 'react';
 
-import Nav from "../components/Nav";
+import Nav from '../components/Nav';
 import styles from '../styles/Home.module.css';
 
 export default function AddPost() {
@@ -15,26 +15,22 @@ export default function AddPost() {
         setError('');
         setMessage('');
 
-        if (!title || !content) return setError('All fields are requred');
-
+        if (!title || !content) return setError('All fields are required');
         let post = {
             title,
             content,
             published: false,
             createdAt: new Date().toISOString(),
         };
-
-        let response = await fetch('/api/posts', {
+        const response = await fetch('/api/posts', {
             method: 'POST',
             body: JSON.stringify(post),
         });
-
         let data = await response.json();
 
-        if (data.success) { //is data.ok also possible here because that's how I learned it?
+        if (data.success) {
             setTitle('');
             setContent('');
-
             return setMessage(data.message);
         } else {
             return setError(data.message);

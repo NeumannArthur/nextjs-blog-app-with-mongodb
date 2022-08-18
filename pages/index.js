@@ -2,48 +2,44 @@ import Head from 'next/head';
 
 import Nav from '../components/Nav';
 import PostCard from '../components/PostCard';
-import { connectToDatabase } from '../lib/mongodb';
 import styles from '../styles/Home.module.css';
 
 export default function Home({ posts }) {
-  return (
-    <div>
-      <Head>
-        <title>Home</title>
-      </Head>
+    return (
+        <div>
+            <Head>
+                <title>Home</title>
+            </Head>
 
-      <Nav />
+            <Nav />
 
-      <main>
-        <div className={styles.container}>
-          {posts.length == 0 ? (
-            <h2>No added posts</h2>
-          ) : (
-            <ul>
-              {posts.map((post, i) => (
-                <PostCard post={post} key={i} />
-              ))}
-            </ul>
-          )}
+            <main>
+                <div className={styles.container}>
+                    {posts.length === 0 ? (
+                        <h2>No added posts</h2>
+                    ) : (
+                        <ul>
+                            {posts.map((post, i) => (
+                                <PostCard post={post} key={i} />
+                            ))}
+                        </ul>
+                    )}
+                </div>
+            </main>
         </div>
-      </main>
-    </div>
-  );
+    );
 }
 
 export async function getServerSideProps(ctx) {
-  
-  let dev = proccess.enc.NODE_ENV !== 'production';
-  let { DEV_URL, PROD_URL } = process.env;
+    let dev = process.env.NODE_ENV !== 'production';
+    let { DEV_URL, PROD_URL } = process.env;
 
-  let response = await fetch(`${dev ? DEV_URL : PROD_URL}/api/posts`);
-  let data = await response.json();
+    let response = await fetch(`${dev ? DEV_URL : PROD_URL}/api/posts`);
+    let data = await response.json();
 
-
-  return {
-    props: {
-      posts: data['message'],
-    },
-  };
+    return {
+        props: {
+            posts: data['message'],
+        },
+    };
 }
-
