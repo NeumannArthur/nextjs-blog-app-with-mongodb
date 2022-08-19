@@ -49,6 +49,7 @@ export async function getServerSideProps(ctx) {
             posts: post_list.map((post) => ({
                 id: post._id.toString(),
                 title: post.title,
+                published: post.published,
                 content: post.content,
                 createdAt: post.createdAt
             }))
